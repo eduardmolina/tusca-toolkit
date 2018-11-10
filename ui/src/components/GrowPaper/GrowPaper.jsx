@@ -20,6 +20,11 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+  },
+  alignImage: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 });
 
@@ -35,27 +40,37 @@ class GrowPaper extends React.Component {
   }
 
   changeLocation = location => {
+    this._handleChange();
     this.props.history.push(location);
   }
 
-  handleChange = () => {
+  _handleChange = () => {
     this.setState(state => ({ show: !state.show }));
   };
 
   componentDidMount() {
-    this.handleChange();
+    this._handleChange();
   }
 
   render() {
     const { show } = this.state;
-    const { classes, buttonValue, timeout } = this.props;
+    const {
+      classes,
+      buttonValue,
+      timeout,
+      image,
+      imageWidth,
+      imageHeight } = this.props;
 
     return (
       <Grow in={show} style={{ transformOrigin: '0 0 0' }} timeout={timeout}>
         <Paper elevation={12} className={classes.panelRoot}>
-          <Button variant='contained' color='primary' className={classes.button} onClick={this._handleClick}>
-            {buttonValue}
-          </Button>
+          <div className={classes.alignImage}>
+            <img src={image} width={imageWidth} height={imageHeight} alt='' />
+            <Button variant='contained' color='primary' className={classes.button} onClick={this._handleClick}>
+              {buttonValue}
+            </Button>
+          </div>
         </Paper>
       </Grow>
     );

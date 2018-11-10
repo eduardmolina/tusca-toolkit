@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <CustomAppBar appBarTitle='Tusca Medkit'/>
+        <CustomAppBar appBarTitle='Tusca Toolkit'/>
 	      <Router>
 	        <Switch>
 	            <Route exact path="/" component={PanelContainer} />
