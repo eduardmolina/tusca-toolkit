@@ -33,6 +33,7 @@ class GrowEvent extends React.Component {
     return (
     <Grow in={show} style={{ transformOrigin: '0 0 0' }} timeout={timeout}>
       <Paper elevation={12} className={classes.paper}>
+      	{this.props.children}
       </Paper>
     </Grow>
     );
