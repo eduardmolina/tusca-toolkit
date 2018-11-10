@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import panelReducer from './panelReducer.js';
+import rds from './reducer.js';
 
-const reducer = combineReducers({test: panelReducer})
+const reducer = combineReducers({'reducer': rds})
 
 export default reducer;

@@ -1,22 +1,12 @@
-let post = (url, user, pass) => {
-    return fetch(url,
-    {
-        method: 'POST',
-        headers:
-        {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            user: user,
-            pass: pass,
-        })
-    }).then((response) => {
-        return response.status;
-    });
+import axios from 'axios';
+
+
+export const makePostRequest = (route, payload) => {
+    let req = axios.post(route, payload);
+    return req;
 }
 
-export const makePostRequest = (user, pass) => {
-    let req = post('/request', user, pass);
+export const makeGetRequest = route => {
+    let req = axios.get(route);
     return req;
 }

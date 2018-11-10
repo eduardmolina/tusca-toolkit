@@ -36,6 +36,9 @@ class Event extends React.Component {
 
 	_handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === 'searchOption' && !this.state.searchOption) {
+    	this.props.fetchEvents();
+    }
   };
 
   render() {
