@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import CustomTable from '../CustomTable/CustomTable.jsx';
 
 
 const styles = theme => ({
@@ -49,8 +50,6 @@ class Event extends React.Component {
 	    	<GrowEvent timeout={500}>
 	    		<div className={classes.around}>
 	    			<TextField
-	    				{...(this.state.textField.length > 0 &&
-	    					!this.state.searchOption ? {'error': true} : '')}
 		          id='standard-search'
 		          label='Search'
 		          type='search'
@@ -60,8 +59,10 @@ class Event extends React.Component {
 		          name='textField'
 		        />
 		    		<FormControl className={classes.formControl}>
-		          <InputLabel htmlFor='search-option'>Option</InputLabel>
-		          <Select
+		          <InputLabel {...(this.state.textField.length > 0 &&
+	    					!this.state.searchOption ? {'error': true} : '')} htmlFor='search-option'>Option</InputLabel>
+		          <Select {...(this.state.textField.length > 0 &&
+	    					!this.state.searchOption ? {'error': true} : '')}
 		            value={this.state.searchOption}
 		            onChange={this._handleChange}
 		            inputProps={{
@@ -74,6 +75,7 @@ class Event extends React.Component {
           		</Select>
         		</FormControl>
 	        </div>
+	        <CustomTable filterThis={this.state.textField} filterBy={this.state.searchOption} data={this.props.events} />
 	    	</GrowEvent>
 	    </div>
     );

@@ -4,7 +4,9 @@ import Event from '../../../components/Event/Event.jsx';
 import * as actions from '../../actions/actions.js';
 
 const mapStateToProps = (state) => {
-	return {}
+	return {
+		events: state.events || []
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -13,6 +13,11 @@ const styles = theme => ({
 });
 
 class Panel extends React.Component {
+
+  componentDidMount() {
+    this.props.destroyEvents();
+  }
+
   render() {
     const { classes } = this.props;
 

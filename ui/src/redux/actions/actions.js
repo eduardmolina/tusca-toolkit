@@ -8,9 +8,22 @@ const setFetchedEvents = (response) => {
   }
 }
 
+
+export const setEventsDestroyed = () => {
+	return {
+		type: 'DESTROY_EVENTS'
+	}
+}
+
+export const destroyEvents = () => {
+	return (dispatch) => {
+		dispatch(setEventsDestroyed());
+	}
+}
+
 export const fetchEvents = () => {
   return (dispatch) => {
-    api.makeGetRequest('https://jsonplaceholder.typicode.com/todos/1').then((response) => {
+    api.makeGetRequest('https://jsonplaceholder.typicode.com/users').then((response) => {
     	let data = response.data;
       dispatch(setFetchedEvents(data));
     }, (error) => {

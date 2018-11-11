@@ -1,14 +1,20 @@
 import {connect} from 'react-redux';
 
 import Panel from '../../../components/Panel/Panel.jsx';
+import * as actions from '../../actions/actions.js';
 
 
 const mapStateToProps = (state) => {
-	return {}
+	return {
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {}
+	return {
+		destroyEvents: () => {
+			return dispatch(actions.destroyEvents());
+		}
+	}
 }
 
 export default connect(
