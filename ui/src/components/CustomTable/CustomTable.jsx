@@ -52,10 +52,10 @@ class CustomTable extends React.Component {
           <TableBody>
             {filterThis ? this._createData(data).filter(row => {
               if (filterBy === 'Name') {
-                return row.name.indexOf(filterThis) !== -1;
+                return row.name.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
               }
               else {
-                return row.city.indexOf(filterThis) !== -1;
+                return row.city.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
               }
             }).map(row => {
               return (
