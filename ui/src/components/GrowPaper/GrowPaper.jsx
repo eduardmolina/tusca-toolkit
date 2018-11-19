@@ -66,7 +66,7 @@ class GrowPaper extends React.Component {
       <Grow in={show} style={{ transformOrigin: '0 0 0' }} timeout={timeout}>
         <Paper elevation={12} className={classes.panelRoot}>
           <div className={classes.alignImage}>
-            <img src={image} width={imageWidth} height={imageHeight} alt='' />
+            <img src={image} style={{ width: imageWidth, height: imageHeight }} alt='' />
             <Button variant='contained' color='primary' className={classes.button} onClick={this._handleClick}>
               {buttonValue}
             </Button>
