@@ -7,7 +7,7 @@ db_con = psycopg2.connect(
     host='localhost',
     database='postgres',
     user='postgres',
-    password='admin123')
+    password='postgres')
 app = create_app(db_con)
 
 

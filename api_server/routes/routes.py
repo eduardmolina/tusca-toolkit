@@ -13,13 +13,13 @@ def make_db_query(db_con, query, keys):
     results = cursor.fetchall()
     parsed_results = parse_results(results, keys)
     cursor.close()
-    
+
     return parsed_results
 
 
 def create_routes(db_con):
     bp = Blueprint('api_routes', __name__)
-    
+
     @bp.route('/healthcheck', methods=['GET'])
     def healthcheck():
         return 'Alive', 200
@@ -37,7 +37,8 @@ def create_routes(db_con):
         db_con.commit()
 
         return json.dumps(
-            {'data': parsed_results, 'success': success}, ensure_ascii=False), 200
+            {'data': parsed_results, 'success': success},
+            ensure_ascii=False), 200
 
     @bp.route('/search_wards', methods=['GET'])
     def search_wards():
@@ -52,15 +53,26 @@ def create_routes(db_con):
         db_con.commit()
 
         return json.dumps(
-            {'data': parsed_results, 'success': success}, ensure_ascii=False), 200
-    
+            {'data': parsed_results, 'success': success},
+            ensure_ascii=False), 200
+
     @bp.route('/insert_wards', methods=['POST'])
     def insert_wards():
-        data = requests.data
-        print(data)
+        data = json.loads(request.data.decode('utf-8'))
+        query = 'insert into wards (cpf, name, lastname) ' \
+            "values ('{}', '{}', '{}');".format(
+                data['cpf'], data['name'], data['lastName'])
+        try:
+            cursor = db_con.cursor()
+            cursor.execute(query)
+            success = True
+        except Exception:
+            success = False
         db_con.commit()
-        
-        return '', 200
+
+        return json.dumps(
+            {'data': '', 'success': success},
+            ensure_ascii=False), 200
 
     @bp.route('/search_places', methods=['GET'])
     def search_places():
@@ -75,6 +87,7 @@ def create_routes(db_con):
         db_con.commit()
 
         return json.dumps(
-            {'data': parsed_results, 'success': success}, ensure_ascii=False), 200
+            {'data': parsed_results, 'success': success},
+            ensure_ascii=False), 200
 
     return bp
