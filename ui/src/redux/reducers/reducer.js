@@ -8,6 +8,10 @@ const rds = (state={}, action) => {
     		return obj;
     	}
     	return _omit(state, 'events');
+    case 'SET_REGISTER_RETURN_CODE':
+      return {...state, successRegister: action.payload}
+    case 'UNSET_DB_ERROR':
+      return {...state, successRegister: true}
     default:
       return state;
   }
