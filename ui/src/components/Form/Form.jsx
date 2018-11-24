@@ -11,11 +11,11 @@ const styles = theme => ({
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
   button: {
-    marginLeft: '2vw',
-    width: '10vh'
+    marginLeft: '1vw',
+    width: '10vw'
   }
 });
 
@@ -23,8 +23,11 @@ class Form extends React.Component {
 
   state = {
     'cpf': '',
-    'name': '',
-    'lastName': ''
+    'patient': '',
+    'nurse': '',
+    'companion': '',
+    'diagnostic': '',
+    'date': ''
   };
 
   _handleChange = name => event => {
@@ -34,8 +37,21 @@ class Form extends React.Component {
   };
 
   _handleClick = () => {
-    const { cpf, name, lastName } = this.state;
-    this.props.register(cpf, name, lastName);
+    const {
+      cpf,
+      patient,
+      nurse,
+      companion,
+      diagnostic,
+      date
+    } = this.state;
+    this.props.register(
+      cpf,
+      patient,
+      nurse,
+      companion,
+      diagnostic,
+      date);
   };
 
   _unsetDBError = () => {
@@ -52,12 +68,11 @@ class Form extends React.Component {
 
   render() {
     const { classes, successRegister } = this.props;
-
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="cpf"
-          label="CPF"
+          label="CPF Paciente"
           value={this.state.cpf}
           className={classes.textField}
           onChange={this._handleChange('cpf')}
@@ -66,21 +81,51 @@ class Form extends React.Component {
           error={!(successRegister === true || successRegister === undefined)}
         />
         <TextField
-          id="name"
-          label="Nome"
-          value={this.state.name}
+          id="patient"
+          label="Nome Paciente"
+          value={this.state.patient}
           className={classes.textField}
-          onChange={this._handleChange('name')}
+          onChange={this._handleChange('patient')}
           margin="normal"
           variant="outlined"
           error={!(successRegister === true || successRegister === undefined)}
         />
         <TextField
-          id="lastName"
-          label="Sobrenome"
-          value={this.state.lastName}
+          id="nurse"
+          label="Enfermeira(o)"
+          value={this.state.nurse}
           className={classes.textField}
-          onChange={this._handleChange('lastName')}
+          onChange={this._handleChange('nurse')}
+          margin="normal"
+          variant="outlined"
+          error={!(successRegister === true || successRegister === undefined)}
+        />
+        <TextField
+          id="companion"
+          label="Acompanhante"
+          value={this.state.companion}
+          className={classes.textField}
+          onChange={this._handleChange('companion')}
+          margin="normal"
+          variant="outlined"
+          error={!(successRegister === true || successRegister === undefined)}
+        />
+        <TextField
+          id="diagnostic"
+          label="Diagnóstico"
+          value={this.state.diagnostic}
+          className={classes.textField}
+          onChange={this._handleChange('diagnostic')}
+          margin="normal"
+          variant="outlined"
+          error={!(successRegister === true || successRegister === undefined)}
+        />
+        <TextField
+          id="date"
+          label="Data"
+          value={this.state.date}
+          className={classes.textField}
+          onChange={this._handleChange('date')}
           margin="normal"
           variant="outlined"
           error={!(successRegister === true || successRegister === undefined)}

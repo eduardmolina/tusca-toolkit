@@ -4,7 +4,8 @@ from flask import Blueprint, request
 
 
 def parse_results(results, keys):
-    return [{key: result[key_index] for key_index, key in enumerate(keys)} for result in results]
+    return [{key: result[key_index]
+            for key_index, key in enumerate(keys)} for result in results]
 
 
 def make_db_query(db_con, query, keys):
@@ -26,7 +27,7 @@ def create_routes(db_con):
 
     @bp.route('/search_events', methods=['GET'])
     def search_events():
-        fields = ['event_name']
+        fields = ['name', 'place', 'date', 'price']
         query = 'select {} from events;'.format(','.join(fields))
         parsed_results = []
         try:
@@ -42,7 +43,7 @@ def create_routes(db_con):
 
     @bp.route('/search_wards', methods=['GET'])
     def search_wards():
-        fields = ['ward_name']
+        fields = ['cpf', 'patient', 'nurse', 'companion', 'date', 'diagnostic']
         query = 'select {} from wards;'.format(','.join(fields))
         parsed_results = []
         try:
@@ -59,14 +60,17 @@ def create_routes(db_con):
     @bp.route('/insert_wards', methods=['POST'])
     def insert_wards():
         data = json.loads(request.data.decode('utf-8'))
-        query = 'insert into wards (cpf, name, lastname) ' \
-            "values ('{}', '{}', '{}');".format(
-                data['cpf'], data['name'], data['lastName'])
+        query = 'insert into wards '\
+                '(cpf, patient, nurse, companion, date, diagnostic) ' \
+            "values ('{}', '{}', '{}', '{}', '{}', '{}');".format(
+                data['cpf'], data['patient'], data['nurse'],
+                data['companion'], data['date'], data['diagnostic'])
         try:
             cursor = db_con.cursor()
             cursor.execute(query)
             success = True
-        except Exception:
+        except Exception as e:
+            print(e)
             success = False
         db_con.commit()
 

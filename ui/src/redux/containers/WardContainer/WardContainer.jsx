@@ -6,17 +6,32 @@ import * as actions from '../../actions/actions.js';
 
 const mapStateToProps = (state) => {
 	return {
+		wards: state.wards || [],
 		successRegister: state.successRegister
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		register: (cpf, name, lastName) => {
-			return dispatch(actions.register(cpf, name, lastName));
+		register: (cpf,
+				patient,
+				nurse,
+				companion,
+				diagnostic,
+				date) => {
+			return dispatch(actions.register(
+				cpf,
+				patient,
+				nurse,
+				companion,
+				diagnostic,
+				date));
 		},
 		unsetDBError: () => {
 			return dispatch(actions.unsetError());
+		},
+		fetchWards: () => {
+			return dispatch(actions.fetchWards());
 		}
 	}
 }

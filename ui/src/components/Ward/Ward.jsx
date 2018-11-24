@@ -8,11 +8,16 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Form from '../Form/Form.jsx';
 import Grow from '@material-ui/core/Grow';
-
+import WardSearch from '../WardSearch/WardSearch.jsx';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 
 const styles = theme => ({
+
 	around: {
-		marginTop: '10vw',
 		display: 'flex',
 		justifyContent: 'center',
 		flexDirection: 'column',
@@ -23,16 +28,37 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
   expansion: {
-  	minWidth: '50vw'
+  	width: '80vw'
+  },
+  textField: {
+  	marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '40vw'
+  },
+  formControl: {
+  	margin: theme.spacing.unit,
+  	minWidth: 80
   }
 });
 
 class Ward extends React.Component {
+
+	state = {
+		searchOption: '',
+    textField: ''
+	};
+
+	_handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === 'searchOption' && !this.state.searchOption) {
+    	this.props.fetchWards();
+    }
+  };
+
   render() {
     const { classes, successRegister } = this.props;
-
     return (
-    	<div className={classes.around}>
+    	<div className={classes.around} style={{ marginTop: '5vw' }}>
     		<Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={500}>
 		    	<ExpansionPanel className={classes.expansion} >
 		        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -49,7 +75,36 @@ class Ward extends React.Component {
 		          <Typography className={classes.heading}>Consultar</Typography>
 		        </ExpansionPanelSummary>
 		        <ExpansionPanelDetails>
-		        	a
+		        	<div style={{padding: '2vw', alignItems: 'flex-end', marginTop: '-8vh'}}>
+			        	<div className={classes.around} style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
+					        <TextField
+					          id='standard-search'
+					          label='Search'
+					          type='search'
+					          className={classes.textField}
+					          margin='normal'
+					          onChange={this._handleChange}
+					          name='textField'
+					        />
+					    		<FormControl className={classes.formControl}>
+					          <InputLabel {...(this.state.textField.length > 0 &&
+				    					!this.state.searchOption ? {'error': true} : '')} htmlFor='search-option'>Option</InputLabel>
+					          <Select {...(this.state.textField.length > 0 &&
+				    					!this.state.searchOption ? {'error': true} : '')}
+					            value={this.state.searchOption}
+					            onChange={this._handleChange}
+					            inputProps={{
+					              name: 'searchOption',
+					              id: 'search-option',
+					            }}
+					          >
+					            <MenuItem value='Patient'>Patient</MenuItem>
+					            <MenuItem value='Diagnostic'>Diagnostic</MenuItem>
+			          		</Select>
+			        		</FormControl>
+				        </div>
+			        	<WardSearch filterThis={this.state.textField} filterBy={this.state.searchOption} data={this.props.wards} />
+			        </div>
 		        </ExpansionPanelDetails>
 	      	</ExpansionPanel>
 	      </Grow>

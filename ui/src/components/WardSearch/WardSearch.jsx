@@ -15,21 +15,23 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: 1000,
   }
 });
 
-class CustomTable extends React.Component {
+class WardSearch extends React.Component {
 
   _createData = rawData => {
     let data = [];
     for (let rawDataIndex in rawData) {
       data.push({
         id: rawDataIndex,
-        name: rawData[rawDataIndex].name,
-        place: rawData[rawDataIndex].place,
+        cpf: rawData[rawDataIndex].cpf,
+        patient: rawData[rawDataIndex].patient,
+        nurse: rawData[rawDataIndex].nurse,
+        companion: rawData[rawDataIndex].companion,
         date: rawData[rawDataIndex].date,
-        price: rawData[rawDataIndex].price
+        diagnostic: rawData[rawDataIndex].diagnostic
       })
     }
     return data;
@@ -43,29 +45,33 @@ class CustomTable extends React.Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Place</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell>CPF</TableCell>
+              <TableCell>Paciente</TableCell>
+              <TableCell>Enfermeira</TableCell>
+              <TableCell>Acompanhante</TableCell>
+              <TableCell>Diagnostico</TableCell>
+              <TableCell>Data</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filterThis ? this._createData(data).filter(row => {
-              if (filterBy === 'Name') {
-                return row.name.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
+              if (filterBy === 'Patient') {
+                return row.patient.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
               }
               else {
-                return row.date.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
+                return row.diagnostic.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
               }
             }).map(row => {
               return (
                 <TableRow key={row.id}>
+                  <TableCell numeric>{row.cpf}</TableCell>
                   <TableCell component='th' scope='row'>
-                    {row.name}
+                    {row.patient}
                   </TableCell>
-                  <TableCell numeric>{row.place}</TableCell>
+                  <TableCell numeric>{row.nurse}</TableCell>
+                  <TableCell numeric>{row.companion}</TableCell>
+                  <TableCell numeric>{row.diagnostic}</TableCell>
                   <TableCell numeric>{row.date}</TableCell>
-                  <TableCell numeric>{row.price}</TableCell>
                 </TableRow>
               );
             }) : <TableRow/>}
@@ -76,8 +82,8 @@ class CustomTable extends React.Component {
   }
 }
 
-CustomTable.propTypes = {
+WardSearch.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomTable);
+export default withStyles(styles)(WardSearch);

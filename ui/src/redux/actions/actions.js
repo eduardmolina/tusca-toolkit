@@ -15,6 +15,13 @@ const setRegisterReturnCode = (returnCode) => {
   }
 }
 
+const setFetchedWards = (response) => {
+  return {
+    type: 'SET_FETCHED_WARDS',
+    payload: response,
+  } 
+}
+
 const unsetDBError = () => {
   return {
     type: 'UNSET_DB_ERROR'
@@ -40,13 +47,16 @@ export const destroyEvents = () => {
 	}
 }
 
-export const register = (cpf, name, lastName) => {
+export const register = (cpf, patient, nurse, companion, diagnostic, date) => {
   return (dispatch) => {
     api.makePostRequest('/api/v1/insert_wards',
       {
         cpf: cpf,
-        name: name,
-        lastName: lastName
+        patient: patient,
+        nurse: nurse,
+        companion: companion,
+        diagnostic: diagnostic,
+        date: date
       }).then((response) => {
       dispatch(setRegisterReturnCode(response.data.success))
     }, (error) => {
@@ -55,10 +65,21 @@ export const register = (cpf, name, lastName) => {
   }
 }
 
+export const fetchWards = () => {
+  return (dispatch) => {
+    api.makeGetRequest('/api/v1/search_wards').then((response) => {
+      let data = response.data.data;
+      dispatch(setFetchedWards(data));
+    }, (error) => {
+      console.log(error);
+    })
+  }
+}
+
 export const fetchEvents = () => {
   return (dispatch) => {
-    api.makeGetRequest('https://jsonplaceholder.typicode.com/users').then((response) => {
-    	let data = response.data;
+    api.makeGetRequest('/api/v1/search_events').then((response) => {
+    	let data = response.data.data;
       dispatch(setFetchedEvents(data));
     }, (error) => {
       console.log(error);

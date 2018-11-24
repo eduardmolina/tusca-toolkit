@@ -23,9 +23,9 @@ class Panel extends React.Component {
 
     return (
       <div className={classes.around}>
-        <GrowPaper buttonValue='Eventos' newLocation='/events' image={eventImage} imageWidth='20vw' imageHeight='42vh' />
-        <GrowPaper buttonValue='Enfermaria' newLocation='/wards' image={wardImage} imageWidth='20vw' imageHeight='42vh' timeout={1000} />
-        <GrowPaper buttonValue='Postos' newLocation='/places' image={placeImage} imageWidth='20vw' imageHeight='42vh' timeout={2000} />
+        <GrowPaper buttonValue='Eventos' newLocation='/events' image={eventImage} imageWidth='20vw' imageHeight='40vh' />
+        <GrowPaper buttonValue='Enfermaria' newLocation='/wards' image={wardImage} imageWidth='20vw' imageHeight='40vh' timeout={1000} />
+        <GrowPaper buttonValue='Postos' newLocation='/places' image={placeImage} imageWidth='20vw' imageHeight='40vh' timeout={2000} />
       </div>
     );
   }
