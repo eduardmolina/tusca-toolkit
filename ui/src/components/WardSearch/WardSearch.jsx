@@ -39,7 +39,7 @@ class WardSearch extends React.Component {
 
   render () {
     const { classes, data, filterThis, filterBy } = this.props;
-
+    console.log(filterThis);
     return (
       <Paper elevation={0} className={classes.root}>
         <Table className={classes.table}>
@@ -54,7 +54,7 @@ class WardSearch extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filterThis ? this._createData(data).filter(row => {
+            {filterThis && filterBy ? this._createData(data).filter(row => {
               if (filterBy === 'Patient') {
                 return row.patient.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
               }

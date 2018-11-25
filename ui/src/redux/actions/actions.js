@@ -35,6 +35,12 @@ const setEventsDestroyed = () => {
 	}
 }
 
+const setWardsDestroyed = () => {
+  return {
+    type: 'DESTROY_WARDS'
+  }
+}
+
 export const unsetError = () => {
   return (dispatch) => {
     dispatch(unsetDBError());
@@ -45,6 +51,12 @@ export const destroyEvents = () => {
 	return (dispatch) => {
 		dispatch(setEventsDestroyed());
 	}
+}
+
+export const destroyWards = () => {
+  return (dispatch) => {
+    dispatch(setWardsDestroyed());
+  }
 }
 
 export const register = (cpf, patient, nurse, companion, diagnostic, date) => {

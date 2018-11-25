@@ -52,6 +52,7 @@ class Form extends React.Component {
       companion,
       diagnostic,
       date);
+    this.props.forceFetch();
   };
 
   _unsetDBError = () => {

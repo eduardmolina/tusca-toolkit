@@ -51,7 +51,7 @@ class Event extends React.Component {
 	    		<div className={classes.around}>
 	    			<TextField
 		          id='standard-search'
-		          label='Search'
+		          label='Buscar'
 		          type='search'
 		          className={classes.textField}
 		          margin='normal'
@@ -60,7 +60,7 @@ class Event extends React.Component {
 		        />
 		    		<FormControl className={classes.formControl}>
 		          <InputLabel {...(this.state.textField.length > 0 &&
-	    					!this.state.searchOption ? {'error': true} : '')} htmlFor='search-option'>Option</InputLabel>
+	    					!this.state.searchOption ? {'error': true} : '')} htmlFor='search-option'>Opção</InputLabel>
 		          <Select {...(this.state.textField.length > 0 &&
 	    					!this.state.searchOption ? {'error': true} : '')}
 		            value={this.state.searchOption}
@@ -70,8 +70,8 @@ class Event extends React.Component {
 		              id: 'search-option',
 		            }}
 		          >
-		            <MenuItem value='Name'>Name</MenuItem>
-		            <MenuItem value='Date'>Date</MenuItem>
+		            <MenuItem value='Name'>Nome</MenuItem>
+		            <MenuItem value='Date'>Data</MenuItem>
           		</Select>
         		</FormControl>
 	        </div>

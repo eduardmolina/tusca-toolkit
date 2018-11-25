@@ -10,12 +10,15 @@ const rds = (state={}, action) => {
     	return {...state, events: action.payload};
     case 'DESTROY_EVENTS':
     	return _omit(state, 'events');
+    case 'DESTROY_WARDS':
+     return _omit(state, 'wards');
     case 'SET_REGISTER_RETURN_CODE':
       return {...state, successRegister: action.payload};
     case 'UNSET_DB_ERROR':
       return {...state, successRegister: true};
     case 'SET_FETCHED_WARDS':
-      return {...state, wards: action.payload};
+      let newWards = action.payload.length > (state.wards || []).length ? action.payload : state.wards;
+      return {...state, wards: newWards};
     default:
       return state;
   }

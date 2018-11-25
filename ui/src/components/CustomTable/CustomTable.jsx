@@ -43,14 +43,14 @@ class CustomTable extends React.Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Place</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell>Nome</TableCell>
+              <TableCell>Local</TableCell>
+              <TableCell>Data</TableCell>
+              <TableCell>Preço</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filterThis ? this._createData(data).filter(row => {
+            {filterThis && filterBy ? this._createData(data).filter(row => {
               if (filterBy === 'Name') {
                 return row.name.toLowerCase().indexOf(filterThis.toLowerCase()) !== -1;
               }

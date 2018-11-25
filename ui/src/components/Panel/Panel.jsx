@@ -16,6 +16,7 @@ class Panel extends React.Component {
 
   componentDidMount() {
     this.props.destroyEvents();
+    this.props.destroyWards();
   }
 
   render() {

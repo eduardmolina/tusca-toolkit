@@ -65,7 +65,7 @@ class Ward extends React.Component {
 		          <Typography className={classes.heading}>Cadastrar</Typography>
 		        </ExpansionPanelSummary>
 		        <ExpansionPanelDetails>
-		          <Form unsetDBError={this.props.unsetDBError} register={this.props.register} successRegister={successRegister} />
+		          <Form forceFetch={this.props.fetchWards} unsetDBError={this.props.unsetDBError} register={this.props.register} successRegister={successRegister} />
 		        </ExpansionPanelDetails>
 	      	</ExpansionPanel>
 	      </Grow>
@@ -79,7 +79,7 @@ class Ward extends React.Component {
 			        	<div className={classes.around} style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
 					        <TextField
 					          id='standard-search'
-					          label='Search'
+					          label='Buscar'
 					          type='search'
 					          className={classes.textField}
 					          margin='normal'
@@ -88,7 +88,7 @@ class Ward extends React.Component {
 					        />
 					    		<FormControl className={classes.formControl}>
 					          <InputLabel {...(this.state.textField.length > 0 &&
-				    					!this.state.searchOption ? {'error': true} : '')} htmlFor='search-option'>Option</InputLabel>
+				    					!this.state.searchOption ? {'error': true} : '')} htmlFor='search-option'>Opção</InputLabel>
 					          <Select {...(this.state.textField.length > 0 &&
 				    					!this.state.searchOption ? {'error': true} : '')}
 					            value={this.state.searchOption}
@@ -98,8 +98,8 @@ class Ward extends React.Component {
 					              id: 'search-option',
 					            }}
 					          >
-					            <MenuItem value='Patient'>Patient</MenuItem>
-					            <MenuItem value='Diagnostic'>Diagnostic</MenuItem>
+					            <MenuItem value='Patient'>Paciente</MenuItem>
+					            <MenuItem value='Diagnostic'>Diagnostico</MenuItem>
 			          		</Select>
 			        		</FormControl>
 				        </div>

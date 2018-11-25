@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		destroyEvents: () => {
 			return dispatch(actions.destroyEvents());
+		},
+		destroyWards: () => {
+			return dispatch(actions.destroyWards());
 		}
 	}
 }
