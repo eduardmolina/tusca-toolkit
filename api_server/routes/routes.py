@@ -27,13 +27,14 @@ def create_routes(db_con):
 
     @bp.route('/search_events', methods=['GET'])
     def search_events():
-        fields = ['name', 'place', 'date', 'price']
-        query = 'select {} from events;'.format(','.join(fields))
+        fields = ['nome', 'local', 'data_hora', 'preco']
+        query = 'select {} from evento;'.format(','.join(fields))
         parsed_results = []
         try:
             parsed_results = make_db_query(db_con, query, fields)
             success = True
-        except Exception:
+        except Exception as e:
+            print(e)
             success = False
         db_con.commit()
 
@@ -43,8 +44,16 @@ def create_routes(db_con):
 
     @bp.route('/search_wards', methods=['GET'])
     def search_wards():
-        fields = ['cpf', 'patient', 'nurse', 'companion', 'date', 'diagnostic']
-        query = 'select {} from wards;'.format(','.join(fields))
+        fields = [
+            'participante.cpf',
+            'participante.nome',
+            'enfermeiro.nome',
+            'consulta.data_hora_entrada',
+            'consulta.sintomas',
+            'consulta.acompanhante']
+        query = 'select {} from consulta ' \
+            'join participante on participante.cpf = consulta.participante '\
+            'join enfermeiro on enfermeiro.cofen = consulta.enfermeiro;'.format(','.join(fields))
         parsed_results = []
         try:
             parsed_results = make_db_query(db_con, query, fields)
@@ -60,11 +69,11 @@ def create_routes(db_con):
     @bp.route('/insert_wards', methods=['POST'])
     def insert_wards():
         data = json.loads(request.data.decode('utf-8'))
-        query = 'insert into wards '\
-                '(cpf, patient, nurse, companion, date, diagnostic) ' \
+        query = 'insert into consulta '\
+                '(id_consulta, participante, enfermeiro, data_hora_entrada, sintomas, acompanhante) ' \
             "values ('{}', '{}', '{}', '{}', '{}', '{}');".format(
-                data['cpf'], data['patient'], data['nurse'],
-                data['companion'], data['date'], data['diagnostic'])
+                data['id'], data['cpf'], data['nurse'], data['date'],
+                data['diagnostic'], data['companion'])
         try:
             cursor = db_con.cursor()
             cursor.execute(query)

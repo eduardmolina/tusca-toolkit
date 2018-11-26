@@ -23,7 +23,7 @@ class Form extends React.Component {
 
   state = {
     'cpf': '',
-    'patient': '',
+    'id': '',
     'nurse': '',
     'companion': '',
     'diagnostic': '',
@@ -39,7 +39,7 @@ class Form extends React.Component {
   _handleClick = () => {
     const {
       cpf,
-      patient,
+      id,
       nurse,
       companion,
       diagnostic,
@@ -47,7 +47,7 @@ class Form extends React.Component {
     } = this.state;
     this.props.register(
       cpf,
-      patient,
+      id,
       nurse,
       companion,
       diagnostic,
@@ -72,6 +72,16 @@ class Form extends React.Component {
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
+            id="id-consult"
+            label="ID Consulta"
+            value={this.state.patient}
+            className={classes.textField}
+            onChange={this._handleChange('id')}
+            margin="normal"
+            variant="outlined"
+            error={!(successRegister === true || successRegister === undefined)}
+          />
+        <TextField
           id="cpf"
           label="CPF Paciente"
           value={this.state.cpf}
@@ -82,18 +92,8 @@ class Form extends React.Component {
           error={!(successRegister === true || successRegister === undefined)}
         />
         <TextField
-          id="patient"
-          label="Nome Paciente"
-          value={this.state.patient}
-          className={classes.textField}
-          onChange={this._handleChange('patient')}
-          margin="normal"
-          variant="outlined"
-          error={!(successRegister === true || successRegister === undefined)}
-        />
-        <TextField
           id="nurse"
-          label="Enfermeira(o)"
+          label="COFEN"
           value={this.state.nurse}
           className={classes.textField}
           onChange={this._handleChange('nurse')}
@@ -123,7 +123,7 @@ class Form extends React.Component {
         />
         <TextField
           id="date"
-          label="Data"
+          label="Data de entrada"
           value={this.state.date}
           className={classes.textField}
           onChange={this._handleChange('date')}

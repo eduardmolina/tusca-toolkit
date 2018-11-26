@@ -14,14 +14,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		register: (cpf,
-				patient,
+				id,
 				nurse,
 				companion,
 				diagnostic,
 				date) => {
 			return dispatch(actions.register(
 				cpf,
-				patient,
+				id,
 				nurse,
 				companion,
 				diagnostic,

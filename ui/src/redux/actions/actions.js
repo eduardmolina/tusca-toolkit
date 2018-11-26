@@ -59,12 +59,12 @@ export const destroyWards = () => {
   }
 }
 
-export const register = (cpf, patient, nurse, companion, diagnostic, date) => {
+export const register = (cpf, id, nurse, companion, diagnostic, date) => {
   return (dispatch) => {
     api.makePostRequest('/api/v1/insert_wards',
       {
         cpf: cpf,
-        patient: patient,
+        id: id,
         nurse: nurse,
         companion: companion,
         diagnostic: diagnostic,

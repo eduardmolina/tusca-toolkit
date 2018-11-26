@@ -15,7 +15,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 1000,
+    minWidth: 900,
   }
 });
 
@@ -26,12 +26,12 @@ class WardSearch extends React.Component {
     for (let rawDataIndex in rawData) {
       data.push({
         id: rawDataIndex,
-        cpf: rawData[rawDataIndex].cpf,
-        patient: rawData[rawDataIndex].patient,
-        nurse: rawData[rawDataIndex].nurse,
-        companion: rawData[rawDataIndex].companion,
-        date: rawData[rawDataIndex].date,
-        diagnostic: rawData[rawDataIndex].diagnostic
+        cpf: rawData[rawDataIndex]['participante.cpf'],
+        patient: rawData[rawDataIndex]['participante.nome'],
+        nurse: rawData[rawDataIndex]['enfermeiro.nome'],
+        companion: rawData[rawDataIndex]['consulta.acompanhante'],
+        date: rawData[rawDataIndex]['consulta.data_hora_entrada'],
+        diagnostic: rawData[rawDataIndex]['consulta.sintomas']
       })
     }
     return data;
@@ -47,7 +47,7 @@ class WardSearch extends React.Component {
             <TableRow>
               <TableCell>CPF</TableCell>
               <TableCell>Paciente</TableCell>
-              <TableCell>Enfermeira</TableCell>
+              <TableCell>Enfermeira(o)</TableCell>
               <TableCell>Acompanhante</TableCell>
               <TableCell>Diagnostico</TableCell>
               <TableCell>Data</TableCell>

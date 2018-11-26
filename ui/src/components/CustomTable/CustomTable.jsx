@@ -26,10 +26,10 @@ class CustomTable extends React.Component {
     for (let rawDataIndex in rawData) {
       data.push({
         id: rawDataIndex,
-        name: rawData[rawDataIndex].name,
-        place: rawData[rawDataIndex].place,
-        date: rawData[rawDataIndex].date,
-        price: rawData[rawDataIndex].price
+        name: rawData[rawDataIndex].nome,
+        place: rawData[rawDataIndex].local,
+        date: rawData[rawDataIndex].data_hora,
+        price: rawData[rawDataIndex].preco
       })
     }
     return data;
