@@ -5,8 +5,7 @@ import * as actions from '../../actions/actions.js';
 
 
 const mapStateToProps = (state) => {
-	return {
-	}
+	return {}
 }
 
 const mapDispatchToProps = (dispatch) => {

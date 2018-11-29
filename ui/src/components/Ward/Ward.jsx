@@ -17,7 +17,6 @@ import FormControl from '@material-ui/core/FormControl';
 import PatientForm from '../PatientForm/PatientForm.jsx';
 
 const styles = theme => ({
-
 	around: {
 		display: 'flex',
 		justifyContent: 'center',

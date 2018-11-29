@@ -9,8 +9,8 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   panelRoot: {
-    width: '30vw',
-    height: '60vh',
+    width: '50vw',
+    height: '50vh',
     margin: '5vw',
     marginTop: '10vh',
     display: 'flex',

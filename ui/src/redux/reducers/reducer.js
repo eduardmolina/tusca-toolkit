@@ -22,6 +22,8 @@ const rds = (state={}, action) => {
     case 'SET_PATIENT_REGISTER_CODE':
       let patientPayload = action.payload;
       return { ...state, patientRegisterCode: patientPayload.returnCode, pgCode: patientPayload.pgCode };
+    case 'SET_NURSE_DATA':
+      return { ...state, analyticsData: action.payload };
     default:
       return state;
   }

@@ -65,6 +65,27 @@ def create_routes(db_con):
             {'data': parsed_results, 'success': success},
             ensure_ascii=False), 200
 
+    @bp.route('/get_analytics/<option>', methods=['GET'])
+    def get_analytics(option):
+        if 'nurse' in option:
+            fields = [
+                'enfermeiro',
+                'count(*)'
+            ]
+            query = 'select {} from consulta group by enfermeiro order by count(*) desc;'.format(','.join(fields))
+            parsed_results = []
+
+            try:
+                parsed_results = make_db_query(db_con, query, fields)
+                success = True
+            except Exception:
+                success = False
+            db_con.commit()
+
+            return json.dumps(
+                {'data': { 'nurse': parsed_results }, 'success': success},
+                ensure_ascii=False), 200                    
+
     @bp.route('/insert_wards', methods=['POST'])
     def insert_wards():
         data = json.loads(request.data.decode('utf-8'))
