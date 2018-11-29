@@ -33,8 +33,7 @@ def create_routes(db_con):
         try:
             parsed_results = make_db_query(db_con, query, fields)
             success = True
-        except Exception as e:
-            print(e)
+        except Exception:
             success = False
         db_con.commit()
 
@@ -74,49 +73,38 @@ def create_routes(db_con):
             "values ('{}', '{}', '{}', '{}', '{}', '{}');".format(
                 data['id'], data['cpf'], data['nurse'], data['date'],
                 data['diagnostic'], data['companion'])
+        pgcode = ''
+
         try:
             cursor = db_con.cursor()
             cursor.execute(query)
             success = True
-        except Exception:
+        except Exception as e:
+            pgcode = e.pgcode
             success = False
         db_con.commit()
 
         return json.dumps(
-            {'data': '', 'success': success},
+            {'data': '', 'success': success, 'pgcode': pgcode},
             ensure_ascii=False), 200
 
     @bp.route('/insert_patient', methods=['POST'])
     def insert_patient():
         data = json.loads(request.data.decode('utf-8'))
         query = "insert into participante (cpf, nome) values ('{}', '{}')".format(data['cpf'], data['name'])
+        pgcode = ''
 
         try:
             cursor = db_con.cursor()
             cursor.execute(query)
             success = True
-        except Exception:
+        except Exception as e:
+            pgcode = e.pgcode
             success = False
         db_con.commit()
 
         return json.dumps(
-            {'data': '', 'success': success},
-            ensure_ascii=False), 200
-
-    @bp.route('/search_places', methods=['GET'])
-    def search_places():
-        fields = ['place_name']
-        query = 'select {} from places;'.format(','.join(fields))
-        parsed_results = []
-        try:
-            parsed_results = make_db_query(db_con, query, fields)
-            success = True
-        except Exception:
-            success = False
-        db_con.commit()
-
-        return json.dumps(
-            {'data': parsed_results, 'success': success},
+            {'data': '', 'success': success, 'pgcode': pgcode},
             ensure_ascii=False), 200
 
     return bp

@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: 'center'
+  },
+  heading: {
+    marginRight: '3vw'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -23,7 +27,8 @@ class Form extends React.Component {
 
   state = {
     'name': '',
-    'cpf': ''
+    'cpf': '',
+    thisButtomThrow: false
   };
 
   _handleChange = name => event => {
@@ -35,12 +40,14 @@ class Form extends React.Component {
   _handleClick = () => {
     const { name, cpf } = this.state;
     this.props.register(cpf, name);
+    this.setState({ thisButtomThrow: true });
   };
 
   _unsetDBError = () => {
     if (!this.props.successRegister) {
       setTimeout(() => {
         this.props.unsetDBError();
+        this.setState({ thisButtomThrow: false });    
       }, 3000);
     }
   }
@@ -50,9 +57,11 @@ class Form extends React.Component {
   }
 
   render() {
-    const { classes, successRegister } = this.props;
+    const { classes, successRegister, pgCode } = this.props;
     return (
       <form className={classes.container} noValidate autoComplete="off">
+        {pgCode === '23505' && this.state.thisButtomThrow ?
+          <Typography className={classes.heading}> Esse CPF já está cadastrado! </Typography> : ''}
         <TextField
           id="patient-name"
           label="Nome Paciente"

@@ -13,13 +13,15 @@ const rds = (state={}, action) => {
     case 'DESTROY_WARDS':
      return _omit(state, 'wards');
     case 'SET_REGISTER_RETURN_CODE':
-      return { ...state, successRegister: action.payload };
+      let wardPayload = action.payload;
+      return { ...state, successRegister: wardPayload.returnCode, pgCode: wardPayload.pgCode };
     case 'UNSET_DB_ERROR':
-      return {...state, successRegister: true, patientRegisterCode: true };
+      return {...state, successRegister: true, patientRegisterCode: true, pgCode: '' };
     case 'SET_FETCHED_WARDS':
       return { ...state, wards: action.payload };
     case 'SET_PATIENT_REGISTER_CODE':
-      return { ...state, patientRegisterCode: action.payload };
+      let patientPayload = action.payload;
+      return { ...state, patientRegisterCode: patientPayload.returnCode, pgCode: patientPayload.pgCode };
     default:
       return state;
   }

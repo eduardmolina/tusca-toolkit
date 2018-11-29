@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
 	return {
 		wards: state.wards || [],
 		successRegister: state.successRegister,
-		successPatientRegister: state.patientRegisterCode
+		successPatientRegister: state.patientRegisterCode,
+		pgCode: state.pgCode
 	}
 }
 

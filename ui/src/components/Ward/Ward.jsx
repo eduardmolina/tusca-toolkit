@@ -57,7 +57,7 @@ class Ward extends React.Component {
   };
 
   render() {
-    const { classes, successRegister, successPatientRegister } = this.props;
+    const { classes, successRegister, successPatientRegister, pgCode } = this.props;
     return (
     	<div className={classes.around} style={{ marginTop: '5vw' }}>
     		<Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={500}>
@@ -66,7 +66,7 @@ class Ward extends React.Component {
 		          <Typography className={classes.heading}>Cadastrar Paciente</Typography>
 		        </ExpansionPanelSummary>
 		        <ExpansionPanelDetails className={classes.around} >
-		        	<PatientForm successRegister={successPatientRegister} unsetDBError={this.props.unsetDBError} register={this.props.registerPatient}/>
+		        	<PatientForm pgCode={pgCode} successRegister={successPatientRegister} unsetDBError={this.props.unsetDBError} register={this.props.registerPatient}/>
 		        </ExpansionPanelDetails>
 	      	</ExpansionPanel>
 	      </Grow>
@@ -76,7 +76,7 @@ class Ward extends React.Component {
 		          <Typography className={classes.heading}>Cadastrar Consulta</Typography>
 		        </ExpansionPanelSummary>
 		        <ExpansionPanelDetails>
-		          <Form forceFetch={this.props.fetchWards} unsetDBError={this.props.unsetDBError} register={this.props.register} successRegister={successRegister} />
+		          <Form pgCode={pgCode} forceFetch={this.props.fetchWards} unsetDBError={this.props.unsetDBError} register={this.props.register} successRegister={successRegister} />
 		        </ExpansionPanelDetails>
 	      	</ExpansionPanel>
 	      </Grow>

@@ -8,10 +8,13 @@ const setFetchedEvents = (response) => {
   }
 }
 
-const setRegisterReturnCode = (returnCode) => {
+const setRegisterReturnCode = (returnCode, pgCode) => {
   return {
     type: 'SET_REGISTER_RETURN_CODE',
-    payload: returnCode
+    payload: {
+      returnCode: returnCode,
+      pgCode: pgCode
+    }
   }
 }
 
@@ -41,10 +44,13 @@ const setWardsDestroyed = () => {
   }
 }
 
-const setRegisterPatientReturnCode = (returnCode) => {
+const setRegisterPatientReturnCode = (returnCode, pgCode) => {
   return {
     type: 'SET_PATIENT_REGISTER_CODE',
-    payload: returnCode
+    payload: {
+      returnCode: returnCode,
+      pgCode: pgCode
+    }
   }
 }
 
@@ -74,7 +80,7 @@ export const registerPatient = (cpf, name) => {
         name: name
       }).then((response) => {
         console.log(response.data.success);
-      dispatch(setRegisterPatientReturnCode(response.data.success));
+      dispatch(setRegisterPatientReturnCode(response.data.success, response.data.pgcode));
     }, (error) => {
       console.log(error);
     });
@@ -103,7 +109,7 @@ export const register = (cpf, id, nurse, companion, diagnostic, date) => {
         diagnostic: diagnostic,
         date: date
       }).then((response) => {
-      dispatch(setRegisterReturnCode(response.data.success));
+      dispatch(setRegisterReturnCode(response.data.success, response.data.pgcode));
     }, (error) => {
       console.log(error);
     });
