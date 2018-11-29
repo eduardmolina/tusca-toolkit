@@ -78,8 +78,24 @@ def create_routes(db_con):
             cursor = db_con.cursor()
             cursor.execute(query)
             success = True
-        except Exception as e:
-            print(e)
+        except Exception:
+            success = False
+        db_con.commit()
+
+        return json.dumps(
+            {'data': '', 'success': success},
+            ensure_ascii=False), 200
+
+    @bp.route('/insert_patient', methods=['POST'])
+    def insert_patient():
+        data = json.loads(request.data.decode('utf-8'))
+        query = "insert into participante (cpf, nome) values ('{}', '{}')".format(data['cpf'], data['name'])
+
+        try:
+            cursor = db_con.cursor()
+            cursor.execute(query)
+            success = True
+        except Exception:
             success = False
         db_con.commit()
 

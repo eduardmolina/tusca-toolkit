@@ -4,11 +4,13 @@ import GrowPaper from '../GrowPaper/GrowPaper.jsx';
 import { withStyles } from '@material-ui/core/styles';
 import eventImage from '../../images/event_image.jpg';
 import wardImage from '../../images/ward_image.jpg';
-import placeImage from '../../images/place_image.jpg';
+
 
 const styles = theme => ({
   around: {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
@@ -24,9 +26,8 @@ class Panel extends React.Component {
 
     return (
       <div className={classes.around}>
-        <GrowPaper buttonValue='Eventos' newLocation='/events' image={eventImage} imageWidth='20vw' imageHeight='40vh' />
-        <GrowPaper buttonValue='Enfermaria' newLocation='/wards' image={wardImage} imageWidth='20vw' imageHeight='40vh' timeout={1000} />
-        <GrowPaper buttonValue='Postos' newLocation='/places' image={placeImage} imageWidth='20vw' imageHeight='40vh' timeout={2000} />
+        <GrowPaper buttonValue='Eventos' newLocation='/events' image={eventImage} imageWidth='25vw' imageHeight='45vh' />
+        <GrowPaper buttonValue='Enfermaria' newLocation='/wards' image={wardImage} imageWidth='25vw' imageHeight='45vh' timeout={1000} />
       </div>
     );
   }

@@ -41,6 +41,13 @@ const setWardsDestroyed = () => {
   }
 }
 
+const setRegisterPatientReturnCode = (returnCode) => {
+  return {
+    type: 'SET_PATIENT_REGISTER_CODE',
+    payload: returnCode
+  }
+}
+
 export const unsetError = () => {
   return (dispatch) => {
     dispatch(unsetDBError());
@@ -59,18 +66,15 @@ export const destroyWards = () => {
   }
 }
 
-export const register = (cpf, id, nurse, companion, diagnostic, date) => {
+export const registerPatient = (cpf, name) => {
   return (dispatch) => {
-    api.makePostRequest('/api/v1/insert_wards',
+    api.makePostRequest('/api/v1/insert_patient',
       {
         cpf: cpf,
-        id: id,
-        nurse: nurse,
-        companion: companion,
-        diagnostic: diagnostic,
-        date: date
+        name: name
       }).then((response) => {
-      dispatch(setRegisterReturnCode(response.data.success))
+        console.log(response.data.success);
+      dispatch(setRegisterPatientReturnCode(response.data.success));
     }, (error) => {
       console.log(error);
     });
@@ -85,6 +89,24 @@ export const fetchWards = () => {
     }, (error) => {
       console.log(error);
     })
+  }
+}
+
+export const register = (cpf, id, nurse, companion, diagnostic, date) => {
+  return (dispatch) => {
+    api.makePostRequest('/api/v1/insert_wards',
+      {
+        cpf: cpf,
+        id: id,
+        nurse: nurse,
+        companion: companion,
+        diagnostic: diagnostic,
+        date: date
+      }).then((response) => {
+      dispatch(setRegisterReturnCode(response.data.success));
+    }, (error) => {
+      console.log(error);
+    });
   }
 }
 

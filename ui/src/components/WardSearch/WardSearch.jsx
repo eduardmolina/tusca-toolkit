@@ -39,7 +39,6 @@ class WardSearch extends React.Component {
 
   render () {
     const { classes, data, filterThis, filterBy } = this.props;
-    console.log(filterThis);
     return (
       <Paper elevation={0} className={classes.root}>
         <Table className={classes.table}>

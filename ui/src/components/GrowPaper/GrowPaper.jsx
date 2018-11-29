@@ -9,10 +9,10 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   panelRoot: {
-    width: '50vw',
-    height: '50vh',
+    width: '30vw',
+    height: '60vh',
     margin: '5vw',
-    marginTop: '10vw',
+    marginTop: '10vh',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -20,6 +20,7 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+    marginBottom: '2vh'
   },
   alignImage: {
     display: 'flex',
@@ -66,7 +67,7 @@ class GrowPaper extends React.Component {
       <Grow in={show} style={{ transformOrigin: '0 0 0' }} timeout={timeout}>
         <Paper elevation={12} className={classes.panelRoot}>
           <div className={classes.alignImage}>
-            <img src={image} style={{ width: imageWidth, height: imageHeight }} alt='' />
+            <img src={image} style={{ width: imageWidth, height: imageHeight, marginBottom: '1vh' }} alt='' />
             <Button variant='contained' color='primary' className={classes.button} onClick={this._handleClick}>
               {buttonValue}
             </Button>

@@ -14,6 +14,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import PatientForm from '../PatientForm/PatientForm.jsx';
 
 const styles = theme => ({
 
@@ -45,7 +46,7 @@ class Ward extends React.Component {
 
 	state = {
 		searchOption: '',
-    textField: ''
+    	textField: ''
 	};
 
 	_handleChange = event => {
@@ -56,13 +57,23 @@ class Ward extends React.Component {
   };
 
   render() {
-    const { classes, successRegister } = this.props;
+    const { classes, successRegister, successPatientRegister } = this.props;
     return (
     	<div className={classes.around} style={{ marginTop: '5vw' }}>
     		<Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={500}>
 		    	<ExpansionPanel className={classes.expansion} >
 		        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-		          <Typography className={classes.heading}>Cadastrar</Typography>
+		          <Typography className={classes.heading}>Cadastrar Paciente</Typography>
+		        </ExpansionPanelSummary>
+		        <ExpansionPanelDetails className={classes.around} >
+		        	<PatientForm successRegister={successPatientRegister} unsetDBError={this.props.unsetDBError} register={this.props.registerPatient}/>
+		        </ExpansionPanelDetails>
+	      	</ExpansionPanel>
+	      </Grow>
+    		<Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={500}>
+		    	<ExpansionPanel className={classes.expansion} >
+		        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+		          <Typography className={classes.heading}>Cadastrar Consulta</Typography>
 		        </ExpansionPanelSummary>
 		        <ExpansionPanelDetails>
 		          <Form forceFetch={this.props.fetchWards} unsetDBError={this.props.unsetDBError} register={this.props.register} successRegister={successRegister} />
@@ -72,7 +83,7 @@ class Ward extends React.Component {
 	      <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={500}>
 	      	<ExpansionPanel className={classes.expansion} >
 		        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-		          <Typography className={classes.heading}>Consultar</Typography>
+		          <Typography className={classes.heading}>Buscar Consulta</Typography>
 		        </ExpansionPanelSummary>
 		        <ExpansionPanelDetails>
 		        	<div style={{padding: '2vw', alignItems: 'flex-end', marginTop: '-8vh'}}>

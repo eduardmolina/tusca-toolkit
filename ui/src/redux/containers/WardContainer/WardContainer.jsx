@@ -7,7 +7,8 @@ import * as actions from '../../actions/actions.js';
 const mapStateToProps = (state) => {
 	return {
 		wards: state.wards || [],
-		successRegister: state.successRegister
+		successRegister: state.successRegister,
+		successPatientRegister: state.patientRegisterCode
 	}
 }
 
@@ -32,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		fetchWards: () => {
 			return dispatch(actions.fetchWards());
+		},
+		registerPatient: (cpf, name) => {
+			return dispatch(actions.registerPatient(cpf, name));
 		}
 	}
 }
