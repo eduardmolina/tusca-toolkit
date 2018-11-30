@@ -65,26 +65,59 @@ def create_routes(db_con):
             {'data': parsed_results, 'success': success},
             ensure_ascii=False), 200
 
-    @bp.route('/get_analytics/<option>', methods=['GET'])
-    def get_analytics(option):
-        if 'nurse' in option:
-            fields = [
-                'enfermeiro',
-                'count(*)'
-            ]
-            query = 'select {} from consulta group by enfermeiro order by count(*) desc;'.format(','.join(fields))
-            parsed_results = []
+    @bp.route('/get_analytics', methods=['GET'])
+    def get_analytics():
+        nurse_fields = [
+            'nome',
+            'count(*)'
+        ]
+        nurse_query = 'select {} from consulta c join enfermeiro e on c.enfermeiro = e.cofen group by ' \
+            'c.enfermeiro, e.nome order by count(*) desc;'.format(','.join(nurse_fields))
+        nurse_parsed_results = []
 
-            try:
-                parsed_results = make_db_query(db_con, query, fields)
-                success = True
-            except Exception:
-                success = False
-            db_con.commit()
+        hour_fields = [
+            "concat(to_char(dia, '00'), '/', to_char(mes, '00'), '/', ano, ' ', hora, 'h')",
+            'quantidade'
+        ]
+        hour_query = "select {} from (select extract(day from to_timestamp(data_hora_entrada, 'dd/mm/yyyy hh24:mi:ss')) as dia, " \
+            "extract(month from to_timestamp(data_hora_entrada, 'dd/mm/yyyy hh24:mi:ss')) as mes, " \
+            "extract(year from to_timestamp(data_hora_entrada, 'dd/mm/yyyy hh24:mi:ss')) as ano, " \
+            "extract(hour from to_timestamp(data_hora_entrada, 'dd/mm/yyyy hh24:mi:ss')) as hora, count(*) as quantidade " \
+            "from consulta group by dia, mes, ano, hora) a;".format(','.join(hour_fields))
+        hour_parsed_results = []
 
-            return json.dumps(
-                {'data': { 'nurse': parsed_results }, 'success': success},
-                ensure_ascii=False), 200                    
+        event_type_fields = [
+            'e.tipo',
+            'count(*)'
+        ]
+        event_type_query = 'select {} from consulta c join participa p on c.participante = p.participante' \
+            ' join evento e on e.nome = p.evento where c.data_hora_entrada between e.data_hora_inicio' \
+            ' and e.data_hora_fim group by e.tipo;'.format(','.join(event_type_fields))
+        event_type_parsed_results = []
+
+        participant_fields = [
+            'participante.nome',
+            'participante.cpf'
+        ]
+        participant_query = "select distinct {} from participa par join participante on " \
+            "par.participante = participante.cpf where not exists (select e.nome from evento e where e.tipo = 'festa' " \
+            "except(select p.evento from participa p where p.participante = par.participante));".format(','.join(participant_fields))
+        participant_parsed_results = []
+
+        try:
+            nurse_parsed_results = make_db_query(db_con, nurse_query, nurse_fields)
+            hour_parsed_results = make_db_query(db_con, hour_query, hour_fields)
+            event_type_parsed_results = make_db_query(db_con, event_type_query, event_type_fields)
+            participant_parsed_results = make_db_query(db_con, participant_query, participant_fields)
+            success = True
+        except Exception:
+            success = False
+        db_con.commit()
+
+        return json.dumps(
+            {'data': { 'nurse': nurse_parsed_results, 'hour': hour_parsed_results, 'event': event_type_parsed_results,
+            'participant': participant_parsed_results }, 'success': success},
+            ensure_ascii=False), 200
 
     @bp.route('/insert_wards', methods=['POST'])
     def insert_wards():

@@ -7,7 +7,10 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AnalyticsTable from '../AnalyticsTable/AnalyticsTable.jsx';
+import HourTable from '../HourTable/HourTable.jsx';
+import NurseTable from '../NurseTable/NurseTable.jsx';
+import ParticipantTable from '../ParticipantTable/ParticipantTable.jsx';
+import EventTable from '../EventTable/EventTable.jsx';
 
 
 const styles = theme => ({
@@ -23,7 +26,7 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
   expansion: {
-  	width: '80vw'
+  	width: '30vw'
   }
 });
 
@@ -39,14 +42,48 @@ class Place extends React.Component {
     return (
     	<div className={classes.around}>
     	  <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={500}>
-					<ExpansionPanel className={classes.expansion} >
-			  		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-			    		<Typography className={classes.heading}>Numero de atendimentos por enfermeiro(a)</Typography>
-			  		</ExpansionPanelSummary>
-			  		<ExpansionPanelDetails >
-							<AnalyticsTable data={analyticsData.nurse} />
-			  		</ExpansionPanelDetails>
-	      	</ExpansionPanel>
+    	  	<div>
+						<ExpansionPanel className={classes.expansion} >
+				  		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+				    		<Typography className={classes.heading}>Numero de atendimentos por enfermeiro(a)</Typography>
+				  		</ExpansionPanelSummary>
+				  		<ExpansionPanelDetails>
+				  			<div style={{padding: '2vw', alignItems: 'flex-end', marginTop: '-8vh'}}>
+									<NurseTable data={analyticsData.nurse} />
+								</div>
+				  		</ExpansionPanelDetails>
+		      	</ExpansionPanel>
+		      	<ExpansionPanel className={classes.expansion} >
+				  		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+				    		<Typography className={classes.heading}>Numero de atendimentos por hora</Typography>
+				  		</ExpansionPanelSummary>
+				  		<ExpansionPanelDetails>
+				  			<div style={{padding: '2vw', alignItems: 'flex-end', marginTop: '-8vh'}}>
+									<HourTable data={analyticsData.hour} />
+								</div>
+				  		</ExpansionPanelDetails>
+		      	</ExpansionPanel>
+		      	<ExpansionPanel className={classes.expansion} >
+				  		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+				    		<Typography className={classes.heading}>Participantes que compareceram em todas as festas</Typography>
+				  		</ExpansionPanelSummary>
+				  		<ExpansionPanelDetails>
+				  			<div style={{padding: '2vw', alignItems: 'flex-end', marginTop: '-8vh'}}>
+									<ParticipantTable data={analyticsData.participant} />
+								</div>
+				  		</ExpansionPanelDetails>
+		      	</ExpansionPanel>
+		      	<ExpansionPanel className={classes.expansion} >
+				  		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+				    		<Typography className={classes.heading}>Numero de atendimentos por tipo de evento</Typography>
+				  		</ExpansionPanelSummary>
+				  		<ExpansionPanelDetails>
+				  			<div style={{padding: '2vw', alignItems: 'flex-end', marginTop: '-8vh'}}>
+									<EventTable data={analyticsData.event} />
+								</div>
+				  		</ExpansionPanelDetails>
+		      	</ExpansionPanel>
+	      	</div>
 	      </Grow>
 	    </div>
     );

@@ -55,14 +55,14 @@ const setRegisterPatientReturnCode = (returnCode, pgCode) => {
 }
 const setNurseData = (data) => {
   return {
-    type: 'SET_NURSE_DATA',
+    type: 'SET_ANALYTICS_DATA',
     payload: data 
   }
 }
 
 export const getNurseData = () => {
   return (dispatch) => {
-    api.makeGetRequest('/api/v1/get_analytics/nurse').then((response) => {
+    api.makeGetRequest('/api/v1/get_analytics').then((response) => {
       let data = response.data.data;
       dispatch(setNurseData(data));
     }, (error) => {
