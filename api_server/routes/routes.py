@@ -4,11 +4,13 @@ from flask import Blueprint, request
 
 
 def parse_results(results, keys):
+    """ Retonar dados do banco em forma de lista de dicionarios  """
     return [{key: result[key_index]
             for key_index, key in enumerate(keys)} for result in results]
 
 
 def make_db_query(db_con, query, keys):
+    """ Faz chamadas ao banco e retorna os valores formatados """
     cursor = db_con.cursor()
     cursor.execute(query)
     results = cursor.fetchall()
@@ -19,18 +21,22 @@ def make_db_query(db_con, query, keys):
 
 
 def create_routes(db_con):
+    """ Cria as rotas da API """
     bp = Blueprint('api_routes', __name__)
 
     @bp.route('/healthcheck', methods=['GET'])
     def healthcheck():
+        """ Checar se está rodando """
         return 'Alive', 200
 
     @bp.route('/search_events', methods=['GET'])
     def search_events():
-        fields = ['nome', 'local', 'data_hora', 'preco']
+        """ Busca eventos """
+        fields = ['nome', 'local', 'data_hora_inicio', 'preco']
         query = 'select {} from evento;'.format(','.join(fields))
         parsed_results = []
         try:
+            # Chamada ao banco
             parsed_results = make_db_query(db_con, query, fields)
             success = True
         except Exception:
@@ -43,6 +49,7 @@ def create_routes(db_con):
 
     @bp.route('/search_wards', methods=['GET'])
     def search_wards():
+        """ Busca consultas """
         fields = [
             'participante.cpf',
             'participante.nome',
@@ -55,6 +62,7 @@ def create_routes(db_con):
             'join enfermeiro on enfermeiro.cofen = consulta.enfermeiro;'.format(','.join(fields))
         parsed_results = []
         try:
+            """ Chamada ao banco """
             parsed_results = make_db_query(db_con, query, fields)
             success = True
         except Exception:
@@ -67,6 +75,7 @@ def create_routes(db_con):
 
     @bp.route('/get_analytics', methods=['GET'])
     def get_analytics():
+        """ Busca dados de análises """
         nurse_fields = [
             'nome',
             'count(*)'
@@ -90,9 +99,10 @@ def create_routes(db_con):
             'e.tipo',
             'count(*)'
         ]
-        event_type_query = 'select {} from consulta c join participa p on c.participante = p.participante' \
-            ' join evento e on e.nome = p.evento where c.data_hora_entrada between e.data_hora_inicio' \
-            ' and e.data_hora_fim group by e.tipo;'.format(','.join(event_type_fields))
+        event_type_query = "select {} from consulta c join participa p on c.participante = p.participante " \
+            "join evento e on e.nome = p.evento where to_timestamp(c.data_hora_entrada, 'dd/mm/yyyy hh24:mi:ss') " \
+            "between to_timestamp(e.data_hora_inicio, 'dd/mm/yyyy hh24:mi:ss') " \
+            "and to_timestamp(e.data_hora_fim, 'dd/mm/yyyy hh24:mi:ss') group by e.tipo;".format(','.join(event_type_fields))
         event_type_parsed_results = []
 
         participant_fields = [
@@ -105,6 +115,7 @@ def create_routes(db_con):
         participant_parsed_results = []
 
         try:
+            # Chamadas ao banco
             nurse_parsed_results = make_db_query(db_con, nurse_query, nurse_fields)
             hour_parsed_results = make_db_query(db_con, hour_query, hour_fields)
             event_type_parsed_results = make_db_query(db_con, event_type_query, event_type_fields)
@@ -121,6 +132,7 @@ def create_routes(db_con):
 
     @bp.route('/insert_wards', methods=['POST'])
     def insert_wards():
+        """ Insere consultas """
         data = json.loads(request.data.decode('utf-8'))
         query = 'insert into consulta '\
                 '(id_consulta, participante, enfermeiro, data_hora_entrada, sintomas, acompanhante) ' \
@@ -130,10 +142,11 @@ def create_routes(db_con):
         pgcode = ''
 
         try:
+            # Chamada ao banco
             cursor = db_con.cursor()
             cursor.execute(query)
             success = True
-        except Exception as e:
+        except Exception:
             pgcode = e.pgcode
             success = False
         db_con.commit()
@@ -144,11 +157,13 @@ def create_routes(db_con):
 
     @bp.route('/insert_patient', methods=['POST'])
     def insert_patient():
+        """ Insere paciente """
         data = json.loads(request.data.decode('utf-8'))
         query = "insert into participante (cpf, nome) values ('{}', '{}')".format(data['cpf'], data['name'])
         pgcode = ''
 
         try:
+            # Chamada ao banco
             cursor = db_con.cursor()
             cursor.execute(query)
             success = True
