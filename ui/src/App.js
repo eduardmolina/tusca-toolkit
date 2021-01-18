@@ -21,15 +21,15 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <CustomAppBar appBarTitle='Tusca Toolkit'/>
-	      <Router>
-	        <Switch>
-	            <Route exact path="/" component={PanelContainer} />
-              <Route exact path="/events" component={EventContainer} />
-              <Route exact path="/places" component={PlaceContainer} />
-              <Route exact path="/wards" component={WardContainer} />
-	          </Switch>
-	      </Router>
-	    </MuiThemeProvider>
+	<Router>
+	  <Switch>
+	    <Route exact path="/" component={PanelContainer} />
+            <Route exact path="/events" component={EventContainer} />
+            <Route exact path="/places" component={PlaceContainer} />
+            <Route exact path="/wards" component={WardContainer} />
+	  </Switch>
+	</Router>
+      </MuiThemeProvider>
     );
   }
 }
